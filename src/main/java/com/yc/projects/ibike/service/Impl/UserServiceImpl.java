@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 验证验证码并注册用户
+     * 验证验证码并注册用户1
      * @param user
      * @return
      */
