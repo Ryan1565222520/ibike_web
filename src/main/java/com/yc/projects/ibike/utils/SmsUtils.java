@@ -15,7 +15,7 @@ import com.tencentcloudapi.sms.v20190711.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
 
 /**
- * Tencent Cloud Sms Sendsms 111
+ * Tencent Cloud Sms Sendsms
  * https://cloud.tencent.com/document/product/382/38778
  *
  */
