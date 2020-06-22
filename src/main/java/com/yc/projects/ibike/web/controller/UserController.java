@@ -52,6 +52,7 @@ public class UserController {
         return jsonModel;
     }
 
+    //押金
     @RequestMapping("/deposit")
     public @ResponseBody  JsonModel deposit(JsonModel jsonModel, User user){
         try {
@@ -70,6 +71,7 @@ public class UserController {
         return jsonModel;
     }
 
+    //实名制
     @RequestMapping("/identity")
     public @ResponseBody  JsonModel identity(JsonModel jsonModel, User user){
         try {
