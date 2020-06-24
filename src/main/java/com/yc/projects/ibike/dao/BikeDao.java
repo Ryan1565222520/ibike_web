@@ -23,7 +23,7 @@ public interface BikeDao {
      * @param bike
      * @return
      */
-    public Bike findBike (Long bid);
+    public Bike findBike (String bid);
 
 
 

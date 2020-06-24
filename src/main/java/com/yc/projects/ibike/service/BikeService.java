@@ -16,7 +16,7 @@ public interface BikeService {
      * @param bid
      * @return
      */
-    public Bike findByBid(Long bid);
+    public Bike findByBid(String bid);
 
     /**
      * 新车上架   必须生成bid 且根据bid生成二维码
@@ -26,4 +26,7 @@ public interface BikeService {
     public Bike addNewBike(Bike bike);
 
     public List<Bike> findNearAll(Bike bike);
+
+    //报修
+    public void reportMantinant(Bike bike);
 }

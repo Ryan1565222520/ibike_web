@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
         String verifyCode=user.getVerifyCode();
         String code=stringRedisTemplate.opsForValue().get(phoneNum);
         if(verifyCode!=null && verifyCode.equals(code)){
+            //mongoTemplate.save(user);  save有就修改 没有添加  insert只能添加 如果有的话 就报错
             mongoTemplate.insert(user);
             flag=true;
         }
@@ -86,5 +87,19 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    @Override
+    public boolean recharge(double balance, String phoneNum) {
+        boolean flag=false;
+        try {
+            mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(phoneNum)),
+                    new Update().inc("balance",balance),User.class);
+            flag=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
 
 }

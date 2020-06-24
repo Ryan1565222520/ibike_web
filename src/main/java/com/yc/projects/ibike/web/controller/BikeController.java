@@ -4,8 +4,6 @@ import com.yc.projects.ibike.bean.Bike;
 import com.yc.projects.ibike.service.BikeService;
 import com.yc.projects.ibike.web.model.JsonModel;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,6 +51,19 @@ public class BikeController {
         List<Bike> list=bikeService.findNearAll(bike);
         jsonModel.setCode(1);
         jsonModel.setObj(list);
+        return jsonModel;
+    }
+
+    @PostMapping("/repair")
+    public @ResponseBody JsonModel repair(   JsonModel jsonModel, Bike bike) {
+        try {
+            this.bikeService.reportMantinant(  bike );
+            jsonModel.setCode(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonModel.setCode(0);;
+            jsonModel.setMsg(  e.getMessage() );
+        }
         return jsonModel;
     }
 }
