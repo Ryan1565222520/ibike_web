@@ -1,6 +1,7 @@
 package com.yc.projects.ibike.service.impl;
 
 import com.yc.projects.ibike.bean.Bike;
+import com.yc.projects.ibike.bean.User;
 import com.yc.projects.ibike.dao.BikeDao;
 import com.yc.projects.ibike.service.BikeService;
 import io.swagger.annotations.Api;
@@ -27,6 +28,7 @@ public class BikeServiceImpl implements BikeService {
     private BikeDao bikeDao;
     @Autowired
     private MongoTemplate mongoTemplate;
+
     private Logger logger=LogManager.getLogger();
 
     @Override
@@ -49,6 +51,7 @@ public class BikeServiceImpl implements BikeService {
         bike.setStatus(Bike.USING);
         bike.setQrcode(bike.getBid());
         bikeDao.updateBike(bike);
+        mongoTemplate.updateFirst(new Query(Criteria.where("phoneNum").is(bike.getPhoneNum())),new Update().set("status",4), User.class,"users");
     }
 
     @Override

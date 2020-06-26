@@ -31,7 +31,7 @@ public class BikeController {
      */
     @RequestMapping(value="/open",method = {RequestMethod.POST})
     @ApiOperation(value="用户开锁操作",notes = "给指定的共享单车开锁 ，参数以json格式传过来") //方法说明
-    public @ResponseBody  JsonModel open(@ApiIgnore JsonModel jsonModel, @RequestBody Bike bike  ) { //@ApiIgnore  在swagger界面不显示参数
+    public @ResponseBody  JsonModel open(@ApiIgnore JsonModel jsonModel, @RequestBody Bike bike) { //@ApiIgnore  在swagger界面不显示参数
         logger.info("open请求参数--》"+bike);
         try {
             Bike b=bikeService.findByBid(bike.getBid());

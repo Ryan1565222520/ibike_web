@@ -1,5 +1,6 @@
 package com.yc.projects.ibike.service.impl;
 
+import com.google.gson.Gson;
 import com.mongodb.client.result.UpdateResult;
 import com.yc.projects.ibike.bean.User;
 import com.yc.projects.ibike.service.UserService;
@@ -13,6 +14,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -29,6 +34,44 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Override
+    public String redisSessionKey(String openId, String sessionKey) {
+        String rsession= UUID.randomUUID().toString();
+        //首先根据openid，取出之前存的openid对应的sessionKey的值
+        String oldSessionKey=stringRedisTemplate.opsForValue().get(openId);
+        if(oldSessionKey !=null && ! "".equals(oldSessionKey)){
+            logger.info("oldSessionKey:"+sessionKey);
+            //删除之前openid对应的缓存
+            stringRedisTemplate.delete(openId);
+            logger.info("老的openId删除以后==" + stringRedisTemplate.opsForValue().get(oldSessionKey));
+        }
+        //开始缓存新的sessionKey  格式:  { uuid:{ "openid":openId,"sessionKey":sessionKey }  }
+        Gson g=new Gson();
+        Map<String,String> m=new HashMap<String,String>();
+        m.put("openid",openId);
+        m.put("sessionKey", sessionKey);
+        String s=g.toJson(m);
+        //stringRedisTemplate.opsForValue().set(rsession, s, 30*24*60*60, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(rsession, s, 5*60, TimeUnit.SECONDS);
+
+        //开始缓存新的opneid与session对应关系 {openid ,ression}
+        //stringRedisTemplate.opsForValue().set(openId,rsession,30*24*60*60,TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(openId,rsession,5*60,TimeUnit.SECONDS);
+
+        return rsession;
+    }
+
+    @Override
+    public void addMember(User u) {
+        mongoTemplate.insert(u);
+    }
+
+    @Override
+    public List<User> selectMember(String openid) {
+        Query q=new Query(Criteria.where("openid").is(openid));
+        return this.mongoTemplate.find(q,User.class,"users");
+    }
 
     @Override
     public void genVerifyCode(String nationCode, String phoneNum) {
@@ -54,10 +97,16 @@ public class UserServiceImpl implements UserService {
         String phoneNum=user.getPhoneNum();
         String verifyCode=user.getVerifyCode();
         String code=stringRedisTemplate.opsForValue().get(phoneNum);
+        //System.out.println(verifyCode+code);
+        String openid=user.getOpenid();
+        String uuid=user.getUuid();
+
+        int status=1;
         if(verifyCode!=null && verifyCode.equals(code)){
-            //mongoTemplate.save(user);  save有就修改 没有添加  insert只能添加 如果有的话 就报错
-            mongoTemplate.insert(user);
-            flag=true;
+            UpdateResult result=mongoTemplate.updateFirst(new Query(Criteria.where("openid").is(openid)),new Update().set("status",1).set("phoneNum",phoneNum),User.class);
+            if(result.getModifiedCount()==1){
+               return true;
+            }
         }
         return flag;
     }

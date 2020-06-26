@@ -25,6 +25,12 @@ public class User implements Serializable {
     @Transient  //瞬态化
     private  String verifyCode;
 
+    private String openid;
+    private String uuid;
+
+    public String getUuid() { return uuid; }
+
+    public void setUuid(String uuid) { this.uuid = uuid; }
 
     public int getStatus() {
         return status;
@@ -82,6 +88,10 @@ public class User implements Serializable {
         this.verifyCode = verifyCode;
     }
 
+    public String getOpenid() { return openid; }
+
+    public void setOpenid(String openid) { this.openid = openid; }
+
     @Override
     public String toString() {
         return "User{" +
@@ -92,6 +102,8 @@ public class User implements Serializable {
                 ", deposit=" + deposit +
                 ", balance=" + balance +
                 ", verifyCode='" + verifyCode + '\'' +
+                ", openid='" + openid + '\'' +
+                ", uuid='" + uuid + '\'' +
                 '}';
     }
 }

@@ -9,7 +9,7 @@ public interface BikeService {
      * 开锁     1，bid必须  2.根据bid查车  3.车的状态
      * @param bike
      */
-    public void open(Bike bike);
+    public void open(Bike bike );
 
     /**
      * 根据bid查车
