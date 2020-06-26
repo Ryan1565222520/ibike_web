@@ -1,4 +1,4 @@
-package com.yc.projects.ibike.service.Impl;
+package com.yc.projects.ibike.service.impl;
 
 import com.yc.projects.ibike.bean.Bike;
 import com.yc.projects.ibike.dao.BikeDao;
@@ -47,7 +47,7 @@ public class BikeServiceImpl implements BikeService {
                 throw new RuntimeException("此车待维修 请更换车辆");
         }
         bike.setStatus(Bike.USING);
-        bike.setQrcode(bike.getBid()+"");
+        bike.setQrcode(bike.getBid());
         bikeDao.updateBike(bike);
     }
 

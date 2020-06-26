@@ -14,7 +14,7 @@ public class User implements Serializable {
 
     private int status;   //用户的状态:  0 刚注册   1 押金缴纳   2. 实名认证
     //这个字段创建索引
-    @Indexed(unique = true)
+    //@Indexed(unique = true)
     private String phoneNum;
     private String name;   //用户名
     private String idNum;   //身份证

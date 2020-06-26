@@ -91,20 +91,5 @@ public class UserController {
     }
 
 
-    @RequestMapping("/recharge")
-    public @ResponseBody  JsonModel recharge(JsonModel jsonModel, User user){
-        try {
-            boolean flag=userService.recharge(user.getBalance(),user.getPhoneNum());
-            if(flag){
-                jsonModel.setCode(1);
-            }else{
-                jsonModel.setCode(0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            jsonModel.setCode(0);
-            jsonModel.setMsg(e.getMessage());
-        }
-        return jsonModel;
-    }
+
 }

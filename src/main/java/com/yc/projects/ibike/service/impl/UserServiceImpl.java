@@ -1,4 +1,4 @@
-package com.yc.projects.ibike.service.Impl;
+package com.yc.projects.ibike.service.impl;
 
 import com.mongodb.client.result.UpdateResult;
 import com.yc.projects.ibike.bean.User;

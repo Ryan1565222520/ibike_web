@@ -34,8 +34,25 @@ public class BikeController {
     public @ResponseBody  JsonModel open(@ApiIgnore JsonModel jsonModel, @RequestBody Bike bike  ) { //@ApiIgnore  在swagger界面不显示参数
         logger.info("open请求参数--》"+bike);
         try {
-            bikeService.open(bike);
-            jsonModel.setCode(1);
+            Bike b=bikeService.findByBid(bike.getBid());
+            if(b==null){
+                jsonModel.setCode(0);
+                jsonModel.setMsg("查无此车 ");
+            }else{
+                switch(b.getStatus()){
+                    case Bike.UNACTIVE:
+                        jsonModel.setCode(0);
+                        jsonModel.setMsg("此车暂未启用 ");
+                    case Bike.USING:
+                        jsonModel.setCode(0);
+                        jsonModel.setMsg("此车正在使用");
+                    case Bike.INTROUBLE:
+                        jsonModel.setCode(0);
+                        jsonModel.setMsg("此车待维修 ");
+                }
+                bikeService.open(bike);
+                jsonModel.setCode(1);
+            }
         } catch (Exception e) {
             jsonModel.setCode(0);
             jsonModel.setMsg(e.getMessage());

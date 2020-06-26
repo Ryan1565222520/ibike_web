@@ -1,4 +1,4 @@
-package com.yc.projects.ibike.service.Impl;
+package com.yc.projects.ibike.service.impl;
 
 import com.yc.projects.ibike.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
