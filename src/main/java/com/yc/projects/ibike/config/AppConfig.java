@@ -35,7 +35,6 @@ public class AppConfig {
         template.setConnectionFactory(conn);
         template.afterPropertiesSet();
         return template;
-
     }
 
     @Bean   //键是字符串  值为字符串
