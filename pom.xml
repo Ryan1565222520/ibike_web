@@ -145,8 +145,22 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+
+
         </dependency>
 
+
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.tencentcloudapi</groupId>
@@ -192,6 +206,10 @@
 <!--            <artifactId>velocity-engine-core</artifactId>-->
 <!--            <version>2.0</version>-->
 <!--        </dependency>-->
+
+
+
+
 
     </dependencies>
 
