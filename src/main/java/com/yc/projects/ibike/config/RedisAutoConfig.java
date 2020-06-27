@@ -59,6 +59,7 @@ public class RedisAutoConfig {
             return jedisPoolConfig;
         }
 
+
         @Bean
         public RedisClusterConfiguration jedisConfig() {
             RedisClusterConfiguration config = new RedisClusterConfiguration();
