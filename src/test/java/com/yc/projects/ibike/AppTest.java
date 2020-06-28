@@ -63,7 +63,7 @@ public class AppTest extends TestCase {
 
     @Test
     public void testMongoTemplate(){
-        System.out.println(mongoTemplate.getDb().getName());
+        System.out.println("+++"+mongoTemplate.getDb().getName());
     }
 
     @Test
