@@ -3,6 +3,7 @@ package com.yc.projects.ibike.config;
 
 
 import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
@@ -72,7 +76,15 @@ public class AppConfig {
      */
     @Bean("mongoClient")
     public MongoClient client() {
-        return new MongoClient("192.168.111.200", 27017);
+        List<ServerAddress> list=new ArrayList<ServerAddress>();
+        ServerAddress sa1=new ServerAddress("192.168.111.200",23000);
+        ServerAddress sa2=new ServerAddress("192.168.111.201",23000);
+        ServerAddress sa3=new ServerAddress("192.168.111.202",23000);
+        list.add( sa1 );
+        list.add( sa2 );
+        list.add( sa3 );
+        return new MongoClient(   list );
+        //return new MongoClient("192.168.0.200", 27017);
     }
 
 
