@@ -83,7 +83,7 @@ public class BikeServiceImpl implements BikeService {
         Query query=new Query();
         query.addCriteria(Criteria.where("status").is(bike.getStatus()))
                 .addCriteria(Criteria.where("loc").near(new Point(bike.getLatitude(),bike.getLongitude())) .maxDistance(20))
-                .limit(10);
+                .limit(20);
         List<Bike> list=this.mongoTemplate.find(query,Bike.class,"bike");
 
         for (Bike b:list){

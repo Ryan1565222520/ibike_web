@@ -6,6 +6,7 @@ import com.yc.projects.ibike.config.AppConfig;
 import com.yc.projects.ibike.dao.BikeDao;
 import com.yc.projects.ibike.service.BikeService;
 import com.yc.projects.ibike.service.UserService;
+import com.yc.projects.ibike.utils.SmsUtils;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import javax.sql.DataSource;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -52,6 +54,29 @@ public class AppTest extends TestCase {
     public void testUserService() throws Exception {
         userService.genVerifyCode("86", "18707339505");
     }
+
+    @Test
+    public void send(){
+        SmsUtils.sendSms("1234", new String[] {"8618707339505"});
+    }
+
+    @Test
+    public void addBikes(){
+        Bike b;
+        for(int i=0;i<199999;i++){
+            b=new Bike();
+            double random1 = ThreadLocalRandom.current().nextDouble(0, 90);
+            double random2 = ThreadLocalRandom.current().nextDouble(0, 180);
+            Double [] loc={ random1,random2};
+            b.setStatus(Bike.LOCK);
+            b.setQrcode("");
+            b.setLoc(loc);
+            mongoTemplate.save(b,"bike");
+            System.out.println(i);
+        }
+
+    }
+
 
     @Test
     public void testRedisTemplate() {
