@@ -13,4 +13,15 @@ public class LogServiceImpl implements LogService {
     public void save(String log) {
         mongoTemplate.save(log,"logs");
     }
+
+    @Override
+    public void savePayLog(String log) {
+        mongoTemplate.save(log,"paylogs");
+    }
+
+    @Override
+    public void saveRepairLog(String log) { mongoTemplate.save(log,"repairlogs"); }
+
+    @Override
+    public void saveUseLog(String log) { mongoTemplate.save(log,"uselogs"); }
 }

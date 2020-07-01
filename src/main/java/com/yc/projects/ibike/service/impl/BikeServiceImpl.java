@@ -82,7 +82,7 @@ public class BikeServiceImpl implements BikeService {
     public List<Bike> findNearAll(Bike bike) {
         Query query=new Query();
         query.addCriteria(Criteria.where("status").is(bike.getStatus()))
-                .addCriteria(Criteria.where("loc").near(new Point(bike.getLatitude(),bike.getLongitude())))
+                .addCriteria(Criteria.where("loc").near(new Point(bike.getLatitude(),bike.getLongitude())) .maxDistance(20))
                 .limit(10);
         List<Bike> list=this.mongoTemplate.find(query,Bike.class,"bike");
 

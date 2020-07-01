@@ -15,10 +15,37 @@ public class LogController {
     @Autowired
     private LogService logService;
 
+    //记录登录日志
     @RequestMapping("/log/savelog")
     public  @ResponseBody JsonModel ready(JsonModel jsonModel,@RequestBody String log){
         logService.save(log);
         jsonModel.setCode(1);
         return jsonModel;
     }
+
+    //记录充值日志
+    @RequestMapping("/log/addPayLog")
+    public  @ResponseBody JsonModel savePayLogs(JsonModel jsonModel,@RequestBody String log){
+        logService.savePayLog(log);
+        jsonModel.setCode(1);
+        return jsonModel;
+    }
+
+    //记录报修日志
+    @RequestMapping("/log/addRepairLog")
+    public  @ResponseBody JsonModel saveRepairLogs(JsonModel jsonModel,@RequestBody String log){
+        logService.saveRepairLog(log);
+        jsonModel.setCode(1);
+        return jsonModel;
+    }
+
+    //记录单车使用日志
+    @RequestMapping("/log/addUseLog")
+    public  @ResponseBody JsonModel saveUseLogs(JsonModel jsonModel,@RequestBody String log){
+        logService.saveUseLog(log);
+        jsonModel.setCode(1);
+        return jsonModel;
+    }
+
+
 }
